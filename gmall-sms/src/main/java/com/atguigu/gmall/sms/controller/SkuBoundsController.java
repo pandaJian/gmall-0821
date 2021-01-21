@@ -3,6 +3,7 @@ package com.atguigu.gmall.sms.controller;
 import com.atguigu.gmall.common.bean.PageParamVo;
 import com.atguigu.gmall.common.bean.PageResultVo;
 import com.atguigu.gmall.common.bean.ResponseVo;
+import com.atguigu.gmall.sms.api.vo.SkuSaleVo;
 import com.atguigu.gmall.sms.entity.SkuBoundsEntity;
 import com.atguigu.gmall.sms.service.SkuBoundsService;
 import io.swagger.annotations.Api;
@@ -26,6 +27,12 @@ public class SkuBoundsController {
 
     @Autowired
     private SkuBoundsService skuBoundsService;
+
+    @PostMapping("save")
+    public ResponseVo saveSales(@RequestBody SkuSaleVo skuSaleVo){
+        skuBoundsService.saveSales(skuSaleVo);
+        return ResponseVo.ok();
+    }
 
     /**
      * 列表
