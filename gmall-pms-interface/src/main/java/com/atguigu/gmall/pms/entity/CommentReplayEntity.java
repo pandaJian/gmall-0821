@@ -2,21 +2,20 @@ package com.atguigu.gmall.pms.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-
-import java.io.Serializable;
-import java.util.Date;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
- * sku销售属性&值
+ * 商品评价回复关系
  * 
  * @author panda
  * @email fengge@atguigu.com
  * @date 2021-01-18 18:47:47
  */
 @Data
-@TableName("pms_sku_attr_value")
-public class SkuAttrValueEntity implements Serializable {
+@TableName("pms_comment_replay")
+public class CommentReplayEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -25,24 +24,12 @@ public class SkuAttrValueEntity implements Serializable {
 	@TableId
 	private Long id;
 	/**
-	 * sku_id
+	 * 评论id
 	 */
-	private Long skuId;
+	private Long commentId;
 	/**
-	 * attr_id
+	 * 回复id
 	 */
-	private Long attrId;
-	/**
-	 * 销售属性名
-	 */
-	private String attrName;
-	/**
-	 * 销售属性值
-	 */
-	private String attrValue;
-	/**
-	 * 顺序
-	 */
-	private Integer sort;
+	private Long replyId;
 
 }

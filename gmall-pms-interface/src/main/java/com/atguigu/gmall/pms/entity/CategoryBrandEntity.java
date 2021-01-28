@@ -2,35 +2,42 @@ package com.atguigu.gmall.pms.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-
-import java.io.Serializable;
-import java.util.Date;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
- * 商品评价回复关系
+ * 品牌分类关联
  * 
  * @author panda
  * @email fengge@atguigu.com
  * @date 2021-01-18 18:47:47
  */
 @Data
-@TableName("pms_comment_replay")
-public class CommentReplayEntity implements Serializable {
+@TableName("pms_category_brand")
+public class CategoryBrandEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * id
+	 * 
 	 */
 	@TableId
 	private Long id;
 	/**
-	 * 评论id
+	 * 品牌id
 	 */
-	private Long commentId;
+	private Long brandId;
 	/**
-	 * 回复id
+	 * 分类id
 	 */
-	private Long replyId;
+	private Long categoryId;
+	/**
+	 * 品牌名称
+	 */
+	private String brandName;
+	/**
+	 * 分类名称
+	 */
+	private String categoryName;
 
 }

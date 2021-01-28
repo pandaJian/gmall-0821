@@ -2,21 +2,20 @@ package com.atguigu.gmall.pms.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-
-import java.io.Serializable;
-import java.util.Date;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
- * sku图片
+ * sku销售属性&值
  * 
  * @author panda
  * @email fengge@atguigu.com
  * @date 2021-01-18 18:47:47
  */
 @Data
-@TableName("pms_sku_images")
-public class SkuImagesEntity implements Serializable {
+@TableName("pms_sku_attr_value")
+public class SkuAttrValueEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -29,16 +28,20 @@ public class SkuImagesEntity implements Serializable {
 	 */
 	private Long skuId;
 	/**
-	 * 图片地址
+	 * attr_id
 	 */
-	private String url;
+	private Long attrId;
 	/**
-	 * 排序
+	 * 销售属性名
+	 */
+	private String attrName;
+	/**
+	 * 销售属性值
+	 */
+	private String attrValue;
+	/**
+	 * 顺序
 	 */
 	private Integer sort;
-	/**
-	 * 默认图[0 - 不是默认图，1 - 是默认图]
-	 */
-	private Integer defaultStatus;
 
 }
