@@ -21,6 +21,8 @@ spring:
   elasticsearch:
     rest:
       uris: 192.168.175.128:9200
+  jackson:
+    default-property-inclusion: non_null
 feign:
   sentinel:
     enabled: true
