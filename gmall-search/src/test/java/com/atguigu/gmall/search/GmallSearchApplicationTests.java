@@ -60,7 +60,7 @@ class GmallSearchApplicationTests {
                         goods.setSkuId(sku.getId());
                         goods.setTitle(sku.getTitle());
                         goods.setPrice(sku.getPrice().doubleValue());
-                        goods.setDefaultImag(sku.getDefaultImage());
+                        goods.setDefaultImage(sku.getDefaultImage());
                         goods.setSubTitle(sku.getSubtitle());
                         //获取库存：销量和是否有货
                         ResponseVo<List<WareSkuEntity>> wareResponseVo = wmsClient.querySkuBySkuId(sku.getId());

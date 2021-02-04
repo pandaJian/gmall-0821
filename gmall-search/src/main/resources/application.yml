@@ -23,6 +23,20 @@ spring:
       uris: 192.168.175.128:9200
   jackson:
     default-property-inclusion: non_null
+  thymeleaf:
+    cache: false
+  rabbitmq:
+    host: 192.168.175.128
+    port: 5672
+    virtual-host: /jiange
+    username: jiange
+    password: jiange
+    listener:
+      simple:
+        prefetch: 1
+        concurrency: 4
+        acknowledge-mode: manual
+
 feign:
   sentinel:
     enabled: true

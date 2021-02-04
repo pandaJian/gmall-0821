@@ -12,7 +12,7 @@ import com.atguigu.gmall.pms.service.SkuImagesService;
 import com.atguigu.gmall.pms.service.SpuAttrValueService;
 import com.atguigu.gmall.pms.service.SpuService;
 import com.atguigu.gmall.pms.vo.SkuVo;
-import com.atguigu.gmall.pms.vo.SpiAttrValueVo;
+import com.atguigu.gmall.pms.vo.SpuAttrValueVo;
 import com.atguigu.gmall.pms.vo.SpuVo;
 import com.atguigu.gmall.sms.api.vo.SkuSaleVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -20,6 +20,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.seata.spring.annotation.GlobalTransactional;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,6 +46,8 @@ public class SpuServiceImpl extends ServiceImpl<SpuMapper, SpuEntity> implements
     SkuAttrValueService skuAttrValueService;
     @Autowired
     GmallSmsClient gmallSmsClient;
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
     @Override
     public PageResultVo queryPage(PageParamVo paramVo) {
@@ -85,6 +88,7 @@ public class SpuServiceImpl extends ServiceImpl<SpuMapper, SpuEntity> implements
         //2.保存sku相关信息
         //2.1保存sku表信息
         saveSkuInfo(spu, spuId);
+        rabbitTemplate.convertAndSend("PMS_ITEM_EXCHANGE","item.insert",spuId);
     }
 
     private void saveSkuInfo(SpuVo spu, Long spuId) {
@@ -129,7 +133,7 @@ public class SpuServiceImpl extends ServiceImpl<SpuMapper, SpuEntity> implements
     }
 
     private void saveSpuAttrValue(SpuVo spu, Long spuId) {
-        List<SpiAttrValueVo> baseAttrs = spu.getBaseAttrs();
+        List<SpuAttrValueVo> baseAttrs = spu.getBaseAttrs();
         if (!CollectionUtils.isEmpty(baseAttrs)){
             List<SpuAttrValueEntity> attrValueEntities = baseAttrs.stream().map(spiAttrValueVo -> {
                 SpuAttrValueEntity spuAttrValueEntity = new SpuAttrValueEntity();

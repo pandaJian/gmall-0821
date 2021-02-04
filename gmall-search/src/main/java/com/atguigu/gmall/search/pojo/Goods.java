@@ -22,7 +22,7 @@ public class Goods {
     @Id
     private Long skuId;
     @Field(type = FieldType.Keyword,index = false)
-    private String defaultImag;
+    private String defaultImage;
     @Field(type = FieldType.Double)
     private Double price;
     @Field(type = FieldType.Text,analyzer = "ik_max_word")

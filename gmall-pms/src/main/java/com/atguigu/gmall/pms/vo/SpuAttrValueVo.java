@@ -11,7 +11,7 @@ import java.util.List;
  * @date : 2021-01-20 13:56
  * Description
  */
-public class SpiAttrValueVo extends SpuAttrValueEntity {
+public class SpuAttrValueVo extends SpuAttrValueEntity {
 
     private List<String> valueSelected;
 

@@ -28,6 +28,14 @@ spring:
     password: 123456Abc@
   redis:
     host: 192.168.175.128
+  rabbitmq:
+    host: 192.168.175.128
+    port: 5672
+    virtual-host: /jiange
+    username: jiange
+    password: jiange
+    publisher-confirm-type: correlated
+    publisher-returns: true
 
 feign:
   sentinel:

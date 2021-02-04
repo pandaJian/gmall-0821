@@ -260,7 +260,7 @@ public class SearchService {
                 )
         );
         // 6.构建结果集过滤
-        sourceBuilder.fetchSource(new String[]{"skuId","defaultImag","price","title","subTitle"},null);
+        sourceBuilder.fetchSource(new String[]{"skuId","defaultImage","price","title","subTitle"},null);
         return sourceBuilder;
     }
 }
