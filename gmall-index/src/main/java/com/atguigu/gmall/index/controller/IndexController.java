@@ -46,4 +46,19 @@ public class IndexController {
         return ResponseVo.ok();
     }
 
+    @GetMapping("index/test/read")
+    @ResponseBody
+    public ResponseVo testRead(){
+        indexService.read();
+        return ResponseVo.ok("测试读方法------");
+    }
+
+    @GetMapping("index/test/write")
+    @ResponseBody
+    public ResponseVo testWrite(){
+        indexService.write();
+        return ResponseVo.ok("测试写方法======");
+    }
+
+
 }
