@@ -2,6 +2,7 @@ package com.atguigu.gmall.index.service;
 
 import com.alibaba.fastjson.JSON;
 import com.atguigu.gmall.common.bean.ResponseVo;
+import com.atguigu.gmall.index.config.GmallCache;
 import com.atguigu.gmall.index.feign.GmallPmsClient;
 import com.atguigu.gmall.index.utils.DistributedLock;
 import com.atguigu.gmall.pms.entity.CategoryEntity;
@@ -44,12 +45,29 @@ public class IndexService {
         return categoryResponseVo.getData();
     }
 
+    @GmallCache(prefix = KEY_PREFIX,timeout = 43200, random = 7200,lock = "index:cates:lock:")
     public List<CategoryEntity> queryLv2CategoriesWithSubsByPid(Long pid) {
+        ResponseVo<List<CategoryEntity>> responseVo = pmsClient.queryLvl2CatesWithSubsByPid(pid);
+        return responseVo.getData();
+    }
+
+    public List<CategoryEntity> queryLv2CategoriesWithSubsByPid2(Long pid) {
         //先查询缓存，如果缓存中有，直接返回
         String json = redisTemplate.opsForValue().get(KEY_PREFIX + pid);
         if (StringUtils.isNotBlank(json)){
             return JSON.parseArray(json,CategoryEntity.class);
         }
+
+        //为了防止缓存击穿，使用分布式锁
+        RLock lock = redissonClient.getLock("index:cates:lock:" + pid);
+        lock.lock();
+
+        //再次查询缓存，因为在请求等待获取锁的过程中,可能有其他请求已把数据放入缓存
+        String json2 = redisTemplate.opsForValue().get(KEY_PREFIX + pid);
+        if (StringUtils.isNotBlank(json2)){
+            return JSON.parseArray(json2,CategoryEntity.class);
+        }
+
         //再去查询数据库，并放入缓存
         ResponseVo<List<CategoryEntity>> responseVo = pmsClient.queryLvl2CatesWithSubsByPid(pid);
         List<CategoryEntity> categoryEntities = responseVo.getData();
@@ -152,4 +170,5 @@ public class IndexService {
         rwLock.writeLock().lock(10,TimeUnit.SECONDS);
         System.out.println("写的业务操作");
     }
+
 }

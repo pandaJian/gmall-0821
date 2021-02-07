@@ -59,6 +59,4 @@ public class IndexController {
         indexService.write();
         return ResponseVo.ok("测试写方法======");
     }
-
-
 }
