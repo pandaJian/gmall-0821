@@ -2,6 +2,7 @@ package com.atguigu.gmall.sms.service.impl;
 
 import com.atguigu.gmall.common.bean.PageParamVo;
 import com.atguigu.gmall.common.bean.PageResultVo;
+import com.atguigu.gmall.sms.api.vo.ItemSaleVo;
 import com.atguigu.gmall.sms.api.vo.SkuSaleVo;
 import com.atguigu.gmall.sms.entity.SkuBoundsEntity;
 import com.atguigu.gmall.sms.entity.SkuFullReductionEntity;
@@ -19,6 +20,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -26,9 +29,9 @@ import java.util.List;
 public class SkuBoundsServiceImpl extends ServiceImpl<SkuBoundsMapper, SkuBoundsEntity> implements SkuBoundsService {
 
     @Autowired
-    SkuFullReductionMapper skuFullReductionMapper;
+    SkuFullReductionMapper reductionMapper;
     @Autowired
-    SkuLadderMapper skuLadderMapper;
+    SkuLadderMapper ladderMapper;
 
     @Override
     public PageResultVo queryPage(PageParamVo paramVo) {
@@ -55,13 +58,43 @@ public class SkuBoundsServiceImpl extends ServiceImpl<SkuBoundsMapper, SkuBounds
         SkuFullReductionEntity skuFullReductionEntity = new SkuFullReductionEntity();
         BeanUtils.copyProperties(skuSaleVo,skuFullReductionEntity);
         skuFullReductionEntity.setAddOther(skuSaleVo.getFullAddOther());
-        skuFullReductionMapper.insert(skuFullReductionEntity);
+        reductionMapper.insert(skuFullReductionEntity);
 
         //3.3保存sku_ladder表信息
         SkuLadderEntity skuLadderEntity = new SkuLadderEntity();
         BeanUtils.copyProperties(skuSaleVo,skuLadderEntity);
         skuLadderEntity.setAddOther(skuSaleVo.getLadderAddOther());
-        skuLadderMapper.insert(skuLadderEntity);
+        ladderMapper.insert(skuLadderEntity);
+    }
+
+    @Override
+    public List<ItemSaleVo> querySalesBySkuId(Long skuId) {
+        List<ItemSaleVo> itemSaleVos = new ArrayList<>();
+        //查询积分营销信息
+        SkuBoundsEntity skuBoundsEntity = this.getOne(new QueryWrapper<SkuBoundsEntity>().eq("sku_id", skuId));
+        if (skuBoundsEntity != null){
+            ItemSaleVo itemSaleVo = new ItemSaleVo();
+            itemSaleVo.setType("积分");
+            itemSaleVo.setDesc("送" + skuBoundsEntity.getBuyBounds() + "购物积分，送" + skuBoundsEntity.getGrowBounds() + "成长积分");
+            itemSaleVos.add(itemSaleVo);
+        }
+        //查询满减营销信息
+        SkuFullReductionEntity reductionEntity = reductionMapper.selectOne(new QueryWrapper<SkuFullReductionEntity>().eq("sku_id", skuId));
+        if (reductionEntity != null){
+            ItemSaleVo itemSaleVo = new ItemSaleVo();
+            itemSaleVo.setType("满减");
+            itemSaleVo.setDesc("满" + reductionEntity.getFullPrice() + "减" + reductionEntity.getReducePrice());
+            itemSaleVos.add(itemSaleVo);
+        }
+        //查询打折营销信息
+        SkuLadderEntity ladderEntity = ladderMapper.selectOne(new QueryWrapper<SkuLadderEntity>().eq("sku_id", skuId));
+        if (ladderEntity != null){
+            ItemSaleVo itemSaleVo = new ItemSaleVo();
+            itemSaleVo.setType("打折");
+            itemSaleVo.setDesc("满" + ladderEntity.getFullCount() + "件打" + ladderEntity.getDiscount().divide(new BigDecimal(10)) + "折");
+            itemSaleVos.add(itemSaleVo);
+        }
+        return itemSaleVos;
     }
 
 }

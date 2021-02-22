@@ -28,6 +28,11 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+    @GetMapping("all/{cid}")
+    public ResponseVo<List<CategoryEntity>> query123CategoriesByCid3(@PathVariable("cid")Long cid){
+        List<CategoryEntity> categoryEntities = categoryService.query123CategoriesByCid3(cid);
+        return ResponseVo.ok(categoryEntities);
+    }
 
     @GetMapping("parent/withsubs/{pid}")
     public ResponseVo<List<CategoryEntity>> queryLvl2CatesWithSubsByPid(@PathVariable("pid")Long pid){

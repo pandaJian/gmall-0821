@@ -3,6 +3,7 @@ package com.atguigu.gmall.sms.controller;
 import com.atguigu.gmall.common.bean.PageParamVo;
 import com.atguigu.gmall.common.bean.PageResultVo;
 import com.atguigu.gmall.common.bean.ResponseVo;
+import com.atguigu.gmall.sms.api.vo.ItemSaleVo;
 import com.atguigu.gmall.sms.api.vo.SkuSaleVo;
 import com.atguigu.gmall.sms.entity.SkuBoundsEntity;
 import com.atguigu.gmall.sms.service.SkuBoundsService;
@@ -27,6 +28,12 @@ public class SkuBoundsController {
 
     @Autowired
     private SkuBoundsService skuBoundsService;
+
+    @GetMapping("sales/{skuId}")
+    public ResponseVo<List<ItemSaleVo>> querySalesBySkuId(@PathVariable("skuId")Long skuId){
+        List<ItemSaleVo> itemSaleVos = skuBoundsService.querySalesBySkuId(skuId);
+        return ResponseVo.ok(itemSaleVos);
+    }
 
     @PostMapping("save")
     public ResponseVo saveSales(@RequestBody SkuSaleVo skuSaleVo){
