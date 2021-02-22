@@ -30,6 +30,8 @@
         <module>gmall-index</module>
         <module>gmall-item</module>
         <module>gmall-ums</module>
+        <module>gmall-ums-interface</module>
+        <module>gmall-auth</module>
     </modules>
 
     <properties>
