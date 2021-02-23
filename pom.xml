@@ -32,6 +32,7 @@
         <module>gmall-ums</module>
         <module>gmall-ums-interface</module>
         <module>gmall-auth</module>
+        <module>gmall-cart</module>
     </modules>
 
     <properties>
