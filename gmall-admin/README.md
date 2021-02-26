@@ -42,7 +42,7 @@ guli-fast
 ├─guliApplication 项目启动类
 │  
 ├──resources 
-│  ├─mapper SQL对应的XML文件
+│  ├─com.atguigu.gmall.scheduled.mapper SQL对应的XML文件
 │  └─static 静态资源
 
 ```

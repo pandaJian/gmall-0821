@@ -33,7 +33,7 @@ spring:
 
 
 mybatis:
-  mapperLocations: classpath:mapper/**/*.xml
+  mapperLocations: classpath:com.atguigu.gmall.scheduled.mapper/**/*.xml
 
 
 pagehelper:

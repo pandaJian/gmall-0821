@@ -108,7 +108,6 @@ public class AuthGatewayFilterFactory extends AbstractGatewayFilterFactory<AuthG
             }
         };
     }
-
     @Data
     public static class PathConfig{
         private List<String> paths;

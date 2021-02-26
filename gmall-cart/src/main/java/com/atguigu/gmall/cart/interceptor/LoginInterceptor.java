@@ -36,7 +36,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         String userKey = CookieUtils.getCookieValue(request, properties.getUserKey());
         if (StringUtils.isBlank(userKey)){//如果userKey为空，制作一个userKey放入cookie中
             userKey = UUID.randomUUID().toString();
-            CookieUtils.setCookie(request,response,properties.getCookieName(),userKey,properties.getExpire());
+            CookieUtils.setCookie(request,response,properties.getUserKey(),userKey,properties.getExpire());
         }
         userInfo.setUserKey(userKey);
         //获取token
@@ -47,6 +47,12 @@ public class LoginInterceptor implements HandlerInterceptor {
         }
         THREAD_LOCAL.set(userInfo);
         return true;
+    }
+
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+        //这里必须清空threadLocal中的资源，因为使用的是tomcat线程池，线程无法结束
+        THREAD_LOCAL.remove();
     }
 
     public static UserInfo getUserInfo(){

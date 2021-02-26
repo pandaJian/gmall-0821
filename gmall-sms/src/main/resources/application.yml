@@ -31,7 +31,7 @@ feign:
   sentinel:
     enabled: true
 mybatis-plus:
-  mapper-locations: classpath:mapper/sms/**/*.xml
+  mapper-locations: classpath:com.atguigu.gmall.scheduled.mapper/sms/**/*.xml
   type-aliases-package: com.atguigu.gmall.sms.entity
   global-config:
     db-config:

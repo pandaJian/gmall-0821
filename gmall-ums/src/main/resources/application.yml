@@ -28,7 +28,7 @@ feign:
   sentinel:
     enabled: true
 mybatis-plus:
-  mapper-locations: classpath:mapper/ums/**/*.xml
+  mapper-locations: classpath:com.atguigu.gmall.scheduled.mapper/ums/**/*.xml
   type-aliases-package: com.atguigu.gmall.ums.entity
   global-config:
     db-config:

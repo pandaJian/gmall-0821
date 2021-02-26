@@ -43,7 +43,7 @@ spring:
 
 #mybatis
 mybatis-plus:
-  mapper-locations: classpath*:/mapper/**/*.xml
+  mapper-locations: classpath*:/com.atguigu.gmall.scheduled.mapper/**/*.xml
   #实体扫描，多个package用逗号或者分号分隔
   typeAliasesPackage: com.atguigu.modules.*.entity
   global-config:
