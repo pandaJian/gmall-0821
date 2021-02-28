@@ -33,5 +33,5 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: auto
-  mapper-locations: classpath:com.atguigu.gmall.scheduled.mapper/wms/**/*.xml
+  mapper-locations: classpath:mapper/wms/**/*.xml
   type-aliases-package: com.atguigu.gmall.wms.entity

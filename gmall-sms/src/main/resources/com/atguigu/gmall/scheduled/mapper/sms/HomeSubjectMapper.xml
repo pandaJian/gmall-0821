@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE com.atguigu.gmall.scheduled.mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-com.atguigu.gmall.scheduled.mapper.dtd">
-<com.atguigu.gmall.scheduled.mapper namespace="com.atguigu.gmall.sms.com.atguigu.gmall.scheduled.mapper.HomeSubjectMapper">
-
-</com.atguigu.gmall.scheduled.mapper>

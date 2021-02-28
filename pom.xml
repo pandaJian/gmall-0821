@@ -35,6 +35,9 @@
         <module>gmall-cart</module>
         <module>gmall-scheduled</module>
         <module>gmall-order</module>
+        <module>gmall-cart-interface</module>
+        <module>gmall-oms</module>
+        <module>gmall-oms-interface</module>
     </modules>
 
     <properties>
